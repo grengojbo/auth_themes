@@ -11,7 +11,7 @@ Each theme might has different usage, please refer their own documents, but most
 Here is an example for how to use theme `clean`
 
 ```go
-import  "github.com/qor/auth_themes/clean"
+import  "github.com/grengojbo/auth_themes/clean"
 
 func main() {
   Auth = clean.New(&auth.Config{
@@ -37,11 +37,11 @@ func New(config *auth.Config) *auth.Auth {
   if config == nil {
     config = &auth.Config{}
   }
-  config.ViewPaths = append(config.ViewPaths, "github.com/qor/auth_themes/clean/views")
+  config.ViewPaths = append(config.ViewPaths, "github.com/grengojbo/auth_themes/clean/views")
 
   Auth := auth.New(config)
   return Auth
 }
 ```
 
-Refer Theme [Clean](https://github.com/qor/auth_themes/tree/master/clean) for more details
+Refer Theme [Clean](https://github.com/grengojbo/auth_themes/tree/master/clean) for more details

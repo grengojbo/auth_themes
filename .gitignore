@@ -5,6 +5,7 @@ Dockerfile
 *.o
 *.a
 *.so
+.idea/
 
 # Folders
 _obj
