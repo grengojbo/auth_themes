@@ -16,10 +16,19 @@ import (
 	"github.com/qor/qor"
 	"github.com/qor/qor/utils"
 	"github.com/qor/render"
+	"github.com/qor/l10n"
 )
 
 // ErrPasswordConfirmationNotMatch password confirmation not match error
 var ErrPasswordConfirmationNotMatch = errors.New("password confirmation doesn't match password")
+
+func currentLocale(req *http.Request) string {
+	locale := l10n.Global
+	if cookie, err := req.Cookie("locale"); err == nil {
+		locale = cookie.Value
+	}
+	return locale
+}
 
 // New initialize clean theme
 func New(config *auth.Config) *auth.Auth {
@@ -35,22 +44,33 @@ func New(config *auth.Config) *auth.Auth {
 	if config.Render == nil {
 		yamlBackend := yaml.New()
 		I18n := i18n.New(yamlBackend)
+		locales := []string{"ru-RU", "uk-UA", "ru-RU", "pl", "en-US"}
 		for _, gopath := range append([]string{filepath.Join(utils.AppRoot, "vendor")}, utils.GOPATH()...) {
-			filePath := filepath.Join(gopath, "src", "github.com/grengojbo/auth_themes/material/locales/en-US.yml")
-			if content, err := ioutil.ReadFile(filePath); err == nil {
-				translations, _ := yamlBackend.LoadYAMLContent(content)
-				for _, translation := range translations {
-					I18n.AddTranslation(translation)
+			for _, localeName := range locales {
+				fileLocale := fmt.Sprintf("github.com/grengojbo/auth_themes/material/locales/%s.yml", localeName)
+				filePath := filepath.Join(gopath, "src", fileLocale)
+				if content, err := ioutil.ReadFile(filePath); err == nil {
+					//fmt.Println("Read locale:", localeName)
+					translations, _ := yamlBackend.LoadYAMLContent(content)
+					for _, translation := range translations {
+						I18n.AddTranslation(translation)
+					}
+					//break
 				}
-				break
 			}
 		}
 
 		config.Render = render.New(&render.Config{
+			//ViewPaths:     []string{"app/views"},
+			//DefaultLayout: "layouts/application",
 			FuncMapMaker: func(render *render.Render, req *http.Request, w http.ResponseWriter) template.FuncMap {
 				return template.FuncMap{
 					"t": func(key string, args ...interface{}) template.HTML {
+						//fmt.Println("--> Locale:", utils.GetLocale(&qor.Context{Request: req}))
 						return I18n.T(utils.GetLocale(&qor.Context{Request: req}), key, args...)
+					},
+					"current_locale": func() string {
+						return currentLocale(req)
 					},
 				}
 			},

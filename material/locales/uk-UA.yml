@@ -1,0 +1,29 @@
+uk-UA:
+  auth:
+    sign_in: "Увійти"
+    or_sign_in_with: "або увійти через"
+    sign_up: "Реєстрація"
+    form:
+      email: "Адреса e-mail"
+      email_placeholder: "Введіть адресу e-mail"
+      password: "Пароль"
+      password_placeholder: "Введіть пароль"
+      new_password: "Новий пароль"
+      new_password_placeholder: "Введіть новий пароль"
+      password_confirm: "Підтвердження пароля"
+      password_confirm_placeholder: "Введіть пароль ще раз"
+      sign_in: "Увійти"
+      sign_up: "Зареєструватися"
+      reset_password: "Відновити пароль"
+      forgot_password: "Продовжити"
+    confirmations:
+      resend_confirmation: "Відправити підтвердження ще раз"
+    passwords:
+      reset_password: "Відновити пароль"
+      forgot_password: "Забули пароль?"
+      forgot_password_desc: "Введіть ваш email адреса, і ми відправимо вам посилання для відновлення пароля."
+    links:
+      sign_in: "Вже зареєстровані? Натисніть, щоб увійти."
+      sign_in_with: "Увійти через {{$1}}"
+      sign_up: "Немає облікового запису? Натисніть, щоб зареєструватися"
+      forgot_password: "Забули пароль?"
